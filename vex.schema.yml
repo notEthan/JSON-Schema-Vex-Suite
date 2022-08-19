@@ -1,0 +1,48 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+type: object
+properties:
+  description:
+    type: string
+  cases:
+    type: array
+    items:
+      type: object
+      properties:
+        directive:
+          description:
+            The language in the specification indicating that the listed `schemas` are nonconformant.
+
+            This language should have the same meaning across referenced `specifications` to which the case applies.
+            Minor rewording across specifications shouldn't necessitate a new case.
+          type: string
+        specifications:
+          description: List of specifications to which this case applies, containing the language of (or the same meaning as) `directive`.
+          type: array
+          items:
+            type: object
+            properties:
+              $schema:
+                type: string
+                format: uri
+                description:
+                  An identifier corresponding to the metaschema dialect whose specification contains the directive.
+
+                  This is to be used by implementations to indicate what specification implementations to test
+                  against, comparable to the directory names JSON-Schema-Test-Suite uses.
+              ref:
+                type: string
+                description: A human-readable reference to the location of the directive in the specification.
+        schemas:
+          type: object
+          propertyNames:
+            description: >
+              An identifier
+              - unique across this suite
+              - consisting of words separated by '.'
+              - indicating the problem with the schema in a hierarchical way, by which implementations
+                may group cases with as much granularity as needed
+            pattern: "([^\\.]+)(\\.[^\\.]+)*"
+          additionalProperties:
+            description:
+              A schema which does not conform to each specification listed in `specifications`,
+              for the reason indicated by `directive`.
