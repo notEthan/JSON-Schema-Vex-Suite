@@ -1,0 +1,68 @@
+description: $schema value
+cases:
+  - directive: |
+      The value of this keyword MUST be a URI [RFC3986].
+      this URI MUST be both absolute and normalized.
+    specifications:
+      - $schema: "http://json-schema.org/draft-04/schema#"
+        section: draft-zyp-json-schema-04 6.  The "$schema" keyword
+      - $schema: "http://json-schema.org/draft-06/schema#"
+        section: draft‑wright‑json‑schema‑01 7.  The "$schema" keyword
+      - $schema: "http://json-schema.org/draft-07/schema#"
+        section: draft-handrews-json-schema-01 7.  The "$schema" Keyword
+      - $schema: "https://json-schema.org/draft/2020-12/schema"
+        section: draft-bhutton-json-schema-01 8.1.1.  The "$schema" Keyword
+    schemas:
+      keyword.$schema.type.null:
+        $schema: null
+      keyword.$schema.type.boolean.true:
+        $schema: true
+      keyword.$schema.type.boolean.false:
+        $schema: false
+      keyword.$schema.type.integer:
+        $schema: 0
+      keyword.$schema.type.number:
+        $schema: 1.1
+      keyword.$schema.type.array.empty:
+        $schema: []
+      keyword.$schema.type.array.nonempty:
+        $schema: [{}]
+      keyword.$schema.type.object.with$schema:
+        $schema: {$schema: "http://json-schema.org/draft-04/schema#"}
+      # not valid URIs
+      keyword.$schema.uri.invalid.port:
+        $schema: "http://jsvs:notaport/"
+      keyword.$schema.uri.invalid.protocol.incomplete:
+        $schema: "http:"
+      keyword.$schema.uri.invalid.host.character:
+        $schema: "http://local\"host/"
+      keyword.$schema.uri.invalid.protocol.character:
+        $schema: "ht%0atp://localhost/"
+      keyword.$schema.uri.invalid.leading_colons:
+        $schema: "::http"
+      keyword.$schema.uri.invalid.protocol.numbers:
+        $schema: "123://jsvs"
+      keyword.$schema.uri.invalid.host.ipv6.syntax:
+        $schema: "http://[<invalid>]/"
+      keyword.$schema.uri.invalid.host.ipvfuture.syntax:
+        $schema: "http://[v0.<invalid>]/"
+      # not absolute
+      keyword.$schema.uri.relative:
+        $schema: "/draft-04/schema"
+      keyword.$schema.uri.relative.dotdot:
+        $schema: "../.."
+      # not normalized
+      keyword.$schema.uri.port.default_port_included:
+        $schema: "http://json-schema.org:80/draft-04/schema#"
+      keyword.$schema.uri.path.dotslash:
+        $schema: "http://json-schema.org/draft-04/./schema#"
+      keyword.$schema.uri.path.dotdotslash:
+        $schema: "http://json-schema.org/draft-04/../draft-04/../draft-04/schema#"
+      keyword.$schema.uri.path.trailingdot:
+        $schema: "http://json-schema.org/draft-04/schema/.#"
+      keyword.$schema.uri.path.trailingdotdot:
+        $schema: "http://json-schema.org/draft-04/schema/..#"
+      keyword.$schema.uri.host.escaped_nonspecial_char:
+        $schema: "http://%6Ason-schema.org/draft-04/schema#"
+      keyword.$schema.uri.host.trailingdot:
+        $schema: "http://json-schema.org./draft-04/schema#"

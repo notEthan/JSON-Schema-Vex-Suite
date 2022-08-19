@@ -1,0 +1,43 @@
+description: $schema outside the resource root
+cases:
+  - directive: This keyword MUST be located at the root of a JSON Schema.
+    specifications:
+      - $schema: "http://json-schema.org/draft-04/schema#"
+        section: draft-zyp-json-schema-04 6.  The "$schema" keyword
+    schemas:
+      keyword.$schema.location.draft-04.outside_doc_root:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        items:
+          $schema: "http://json-schema.org/draft-04/schema#"
+          items: {}
+      keyword.$schema.location.draft-04.multiple_outside_root:
+        $schema: "http://json-schema.org/draft-04/schema#"
+        definitions:
+          a:
+            $schema: "http://json-schema.org/draft-04/schema#"
+            $id: "https://jsvs/8j0"
+            items:
+              $schema: "http://json-schema.org/draft-04/schema#"
+  - directive: |
+      The "$schema" keyword MUST NOT appear in non-resource root schema objects.
+    specifications:
+      - $schema: "https://json-schema.org/draft/2020-12/schema"
+        section: |
+          draft-bhutton-json-schema-01 7.1.  Lexical Scope and Dynamic Scope
+            "$schema" ... MUST only appear in a schema resource's root schema.
+          draft-bhutton-json-schema-01 8.1.1.  The "$schema" Keyword
+            The "$schema" keyword ... MUST NOT appear in non-resource root schema objects.
+    schemas:
+      keyword.$schema.location.draft/2020-12.outside_doc_root:
+        $schema: "https://json-schema.org/draft/2020-12/schema"
+        items:
+          $schema: "https://json-schema.org/draft/2020-12/schema"
+          items: {}
+      keyword.$schema.location.draft/2020-12.outside_subschema_resource_root:
+        $schema: "https://json-schema.org/draft/2020-12/schema"
+        $defs:
+          a:
+            $schema: "https://json-schema.org/draft/2020-12/schema"
+            $id: "https://jsvs/8j1"
+            items:
+              $schema: "https://json-schema.org/draft/2020-12/schema"

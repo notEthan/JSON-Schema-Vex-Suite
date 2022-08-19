@@ -1,0 +1,76 @@
+description: id value
+cases:
+  - directive: |
+      The value for this keyword MUST be a string, and MUST be a valid URI.
+      This URI MUST be normalized
+    specifications:
+      - $schema: "http://json-schema.org/draft-04/schema#"
+        section: |
+          draft-zyp-json-schema-04
+          7.2.  URI resolution scope alteration with the "id" keyword
+          7.2.1.  Valid values
+      - $schema: "http://json-schema.org/draft-06/schema#"
+        section: draft‑wright‑json‑schema‑01
+      - $schema: "http://json-schema.org/draft-07/schema#"
+        section: draft-handrews-json-schema-01
+      - $schema: "https://json-schema.org/draft/2020-12/schema"
+        section: draft-bhutton-json-schema-01
+    schemas:
+      keyword.id.type.null:
+        id: null
+      keyword.id.type.boolean.true:
+        id: true
+      keyword.id.type.boolean.false:
+        id: false
+      keyword.id.type.integer:
+        id: 0
+      keyword.id.type.number:
+        id: 1.1
+      keyword.id.type.array.empty:
+        id: []
+      keyword.id.type.array.nonempty:
+        id: [{}]
+      keyword.id.type.object.withid:
+        id: {id: "http://json-schema.org/draft-04/schema#"}
+      # not valid URIs
+      keyword.id.uri.invalid.port:
+        id: "http://jsvs:notaport/"
+      keyword.id.uri.invalid.protocol.incomplete:
+        id: "http:"
+      keyword.id.uri.invalid.host.character:
+        id: "http://local\"host/"
+      keyword.id.uri.invalid.protocol.character:
+        id: "ht%0atp://localhost/"
+      keyword.id.uri.invalid.leading_colons:
+        id: "::http"
+      keyword.id.uri.invalid.protocol.numbers:
+        id: "123://jsvs"
+      keyword.id.uri.invalid.host.ipv6.syntax:
+        id: "http://[<invalid>]/"
+      keyword.id.uri.invalid.host.ipvfuture.syntax:
+        id: "http://[v0.<invalid>]/"
+      # not normalized
+      keyword.id.uri.not_normalized.relative.path.dotslash:
+        id: "/draft-04/./schema"
+      keyword.id.uri.not_normalized.relative.path.dotdotslash:
+        id: "/draft-04/../draft-04/../draft-04/schema"
+      keyword.id.uri.not_normalized.relative.path.trailingdot:
+        id: "/draft-04/schema/."
+      keyword.id.uri.not_normalized.relative.path.trailingdotdot:
+        id: "/draft-04/schema/.."
+      keyword.id.uri.not_normalized.relative.path.escaped_nonspecial_char:
+        id: "/%64raft-04/schema"
+      keyword.id.uri.not_normalized.absolute.port.default_port_included:
+        id: "http://json-schema.org:80/draft-04/schema"
+      keyword.id.uri.not_normalized.absolute.path.dotslash:
+        id: "http://json-schema.org/draft-04/./schema"
+      keyword.id.uri.not_normalized.absolute.path.dotdotslash:
+        id: "http://json-schema.org/draft-04/../draft-04/../draft-04/schema"
+      keyword.id.uri.not_normalized.absolute.path.trailingdot:
+        id: "http://json-schema.org/draft-04/schema/."
+      keyword.id.uri.not_normalized.absolute.path.trailingdotdot:
+        id: "http://json-schema.org/draft-04/schema/.."
+      keyword.id.uri.not_normalized.absolute.host.escaped_nonspecial_char:
+        id: "http://%6Ason-schema.org/draft-04/schema"
+      keyword.id.uri.not_normalized.absolute.host.trailingdot:
+        id: "http://json-schema.org./draft-04/schema"

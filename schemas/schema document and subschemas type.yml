@@ -1,0 +1,65 @@
+description: The type of the schema itself
+cases:
+  - directive: A JSON Schema is a JSON document, and that document MUST be an object.
+    specifications:
+      - $schema: "http://json-schema.org/draft-04/schema#"
+        section: draft-zyp-json-schema-04 3.2.  JSON Schema, keywords
+    schemas:
+      schema.type.draft4.root.boolean.true:
+        true
+      schema.type.draft4.root.boolean.false:
+        false
+      # The section refers to documents, but the MUST applies to subschemas as well.
+      schema.type.draft4.subschema.boolean.true:
+        definitions: {'*': true}
+      schema.type.draft4.subschema.boolean.false:
+        definitions: {'*': false}
+
+  - directive: A JSON Schema MUST be an object or a boolean.
+    specifications:
+      - $schema: "http://json-schema.org/draft-04/schema#"
+        section: draft-zyp-json-schema-04 3.2.  JSON Schema, keywords
+        # draft-04 schemas also may not be boolean, tested separately above
+      - $schema: "http://json-schema.org/draft-06/schema#"
+        section: draft‑wright‑json‑schema‑01 4.4.  JSON Schema documents
+      - $schema: "http://json-schema.org/draft-07/schema#"
+        section: draft-handrews-json-schema-01 4.3.1.  JSON Schema Values and Keywords
+      - $schema: "https://json-schema.org/draft/2020-12/schema"
+        section: draft-bhutton-json-schema-01 4.3.  JSON Schema Documents
+    schemas:
+      schema.type.root.null:
+        null
+      schema.type.root.integer:
+        0
+      schema.type.root.number:
+        1.1
+      schema.type.root.string.empty:
+        ""
+      schema.type.root.string.uri:
+        "http://example.com/schema"
+      schema.type.root.array.empty:
+        []
+      schema.type.root.array.nonempty:
+        [{}]
+      # The section refers to documents, but the MUST applies to subschemas as well.
+      schema.type.subschema.null:
+        allOf:
+          - null
+      schema.type.subschema.integer:
+        allOf:
+          - 0
+      schema.type.subschema.number:
+        allOf:
+          - 1.1
+      schema.type.subschema.string.empty:
+        allOf:
+          - ""
+      schema.type.subschema.string.uri:
+        allOf:
+          - "http://example.com/schema"
+      schema.type.subschema.array.empty:
+        allOf:
+          - []
+      schema.type.subschema.array.nonempty:
+        allOf:
+          - [{}]
